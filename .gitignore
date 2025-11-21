@@ -1,0 +1,17 @@
+.vscode/
+.DS_Store
+
+# specific files
+data_structures/arrayList/ArrayList
+data_structures/linkedList/CircularSinglyLinkedList
+data_structures/linkedList/DoublyLinkedList
+data_structures/LRUCache/LRUCache
+data_structures/queue/Queue
+data_structures/stack/Stack
+data_structures/unionFind/UnionFind
+oop/main
+
+coding_and_debugging/floating_points/floating_points
+coding_and_debugging/mistakes/arithmetic_overflow
+coding_and_debugging/mistakes/operator_hierarchy
+coding_and_debugging/mistakes/promotions
