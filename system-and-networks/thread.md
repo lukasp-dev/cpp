@@ -44,3 +44,7 @@
 
 ### Kernel-level threads
 - The norm in most modern operating systems
+![image](https://i.postimg.cc/bY5zwLqh/image-(5).png)
+- The process-level scheduler manages which process(P1, P2, P3) is ready to run.
+- The thread-level scheduler manages threads (T1, T2, T3) within those precesses.
+- Threading is visible to the OS, and the OS provides the thread library.
