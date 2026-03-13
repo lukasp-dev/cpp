@@ -1,7 +1,7 @@
 # C++ Study Repository
 
 This repository is my personal workspace for learning and practicing C++,  
-covering algorithms, data structures, language fundamentals, debugging techniques, and more.
+covering algorithms, data structures, language fundamentals, debugging techniques, systems architecture, network and more.
 
 All **code and text** in this repository are created by **Jewook Park**,  
 and **all copyrights are reserved** unless otherwise specified.
