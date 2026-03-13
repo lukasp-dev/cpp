@@ -10,7 +10,7 @@
     - Fixed Size: The size is determined at compile time and remains constant throughout execution.
 
 2. Data Segment (Initialized Data)
-- Role: COntains global and static variables that have been explicitly initialized with non-zero values.
+- Role: Contains global and static variables that have been explicitly initialized with non-zero values.
 - Granular Sub-Divisions:
     - Read_Write Area: For variables like `int g_count = 10;` that change during runtime.
     - Read-Only Area (ROData): For consants like `const in MAX_USERS = 10;` and string literals like `"Hello World"`.
