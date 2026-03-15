@@ -1,6 +1,8 @@
 .vscode/
 .DS_Store
 
+Effective+Modern+C++.pdf
+
 # specific files
 data_structures/arrayList/ArrayList
 data_structures/linkedList/CircularSinglyLinkedList
