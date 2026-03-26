@@ -1,6 +1,7 @@
 ### lvalue and rvalue
 
 **lavalue**: objects(object is a region of storage in the execution environmnet that can store a value. -> any type, including primitive types like `int` and `float`, as well as user-defined types like classes and structs are technically objects.) that have an identifiable, persistent memory location and can appear on both the left and right sides of an assignment.
+
 **rvalue**: temporary values or objects that do not persist beyong the expression that uses them and can only appear on the right side of an assignment.
 
 When C++ gets an parameter, it can specify how to get one.
@@ -55,6 +56,8 @@ std::vector<double> target = std::move(large_data);
 
 ---
 
+#### move example
+
 ```cpp
 #include <iostream>
 #include <vector>
@@ -93,3 +96,12 @@ int main(){
 // --- After Move ---
 // Original lvalue size: 0
 ```
+
+### `move` 에 대하여 
+물리적으로는 주소가 존재함에도 불구하고, 언어 차원에서 주소 접근을 막아버림으로써 이를 `Rvalue`로 취급하는 것.
+(Despite having a persistent memory location in physical terms, the language specification forbids taking its address, effectively categorizing it as an rvalue.)
+
+More specifically, 
+"In C++, an **rvalue** is essentially an expression that does not have a persistent **identity** in the eyes of the compiler. When we use `std::move(x)`, we are not physically moving the object in memory; rather, we are **casting** it to an **xvalue** (expiring value).
+
+Even though the object still resides at the same **physical memory address**, the C++ type system treats the result of `std::move` as an anonymous temporary. By **restricting address-of operations** on this result, the language ensures that the object's resources can be safely 'stolen' or moved without the risk of the original identifier being misused."
