@@ -19,7 +19,7 @@ Why the `nullptr` is mandatory?
 - **Overload Resolution:** 
 ```cpp
 void find(int x); // (1)
-void find(int* p) // (2)
+void find(int* p); // (2)
 
 find(NULL); // Ambiguous or calls (1)
 find(nullptr); //Correctly calls (2)
