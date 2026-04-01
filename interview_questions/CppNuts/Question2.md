@@ -100,3 +100,28 @@ public:
 OrderProcessor op;
 op.execute(); // Calls logic() with ZERO virtual overhead.
 ```
+
+### `: public Base` v. `: private Base`
+
+```cpp
+class Base {
+public:
+    void talk() {}
+};
+
+// PUBLIC: Everyone knows DerivedA is a Base
+class DerivedA : public Base {}; 
+
+// PRIVATE: No one knows DerivedB uses Base
+class DerivedB : private Base {
+    void work() { talk(); } // OK: I can use it internally
+};
+
+int main() {
+    DerivedA a;
+    a.talk(); // OK
+
+    DerivedB b;
+    // b.talk(); // ERROR: talk() is now private inside DerivedB
+}
+```
