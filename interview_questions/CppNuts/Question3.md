@@ -3,8 +3,9 @@
 when you append `const` to a function signature, you are making a formal promise: "Calling this function will not change the observable state of the object."
 
 Inside a `const` function, every member variable of the class becomes read-only.
+-> 이 함수는 클래스의 멤버 변수를 건드리지 않겠다.
 ```cpp
-class Tradingaccount {
+class TradingAccount {
     double balance;
 public:
     double getBalance() const {
