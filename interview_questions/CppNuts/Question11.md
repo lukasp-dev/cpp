@@ -20,7 +20,7 @@ int main() {
 
     int var = 200;
     b = var;
-    std::cout << a << "\n"; // a의 값도 바뀌어버림=
+    std::cout << a << "\n"; // a의 값도 바뀌어버림
 
     return 0;
 }
