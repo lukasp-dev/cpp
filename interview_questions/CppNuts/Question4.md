@@ -1,7 +1,7 @@
 # What is function hiding?
 **Function Hiding** occurs when a member function in a derived class has the **same name** as a function in the base class.
 
-In C++, if the derived class declares a functiono named `f`, it hides all functions named `f` in the base class, refarless of whether the signatures (parameters) are different.
+In C++, if the derived class declares a function named `f`, it hides all functions named `f` in the base class, refarless of whether the signatures (parameters) are different.
 
 ```cpp
 class BaseStrategy {
@@ -16,7 +16,7 @@ class AggressiveStrategy : public BaseStrategy {
 
 int main(){
     AggressiveStrategy strat;
-    strat.execute(100); // ERROR! The compiler onlu sees the (double) version.
+    strat.execute(100); // ERROR! The compiler only sees the (double) version.
 }
 ```
 |Term|Scope|Requirement|
