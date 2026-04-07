@@ -3,6 +3,9 @@
 
 Effective+Modern+C++.pdf
 
+# specific project
+high-perf-auction-engine
+
 # specific files
 data_structures/arrayList/ArrayList
 data_structures/linkedList/CircularSinglyLinkedList
