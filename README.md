@@ -5,3 +5,7 @@ covering algorithms, data structures, language fundamentals, debugging technique
 
 Feel free to browse, but please do not reuse any part of this repository  
 for commercial purposes or academic submissions without permission.
+
+### how to compile and run
+`g++ -Werror -std=c++17 1_hello_world.cpp -o hello`
+`./hello`

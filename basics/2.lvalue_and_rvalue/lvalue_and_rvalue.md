@@ -2,7 +2,8 @@
 
 **lavalue**: objects(object is a region of storage in the execution environmnet that can store a value. -> any type, including primitive types like `int` and `float`, as well as user-defined types like classes and structs are technically objects.) that have an identifiable, persistent memory location and can appear on both the left and right sides of an assignment.
 
-**rvalue**: temporary values or objects that do not persist beyong the expression that uses them and can only appear on the right side of an assignment.
+**rvalue**: temporary values or objects that do not persist beyond the expression that uses them and can only appear on the right side of an assignment.
+-> 딱 그 줄에서만 연산을 위해 임시로 만들어졌다가, 세미콜론(`;`)을 찍고 다음 줄로 넘어가면 메모리에서 즉시 사라지는 값.
 
 When C++ gets an parameter, it can specify how to get one.
 1. `void func(int& a)` means it will get only **lvalues** as parameters, meaning no rvalue can be passed as the parameter.
@@ -38,6 +39,32 @@ std::vector<double> target = std::move(large_data);
 // now target holds the start address of the object in the heap.
 // large_data's size is now 0.
 ```
+
+C++14 부터 move 의 definition 
+```cpp
+template< class T >
+constexpr std::remove_reference_t<T>&& move(T && t) noexcept;
+```
+1. `T&& t` gate
+`T &&` 는 우측값만 받는 게 아니고, Forwarding Reference 라는 universal 입구임.
+parameter 로 어떤 종류의 값이 들어오는지에 따라 T의 타입 추론이 다르게 되면서 정해진 룰셋에 따라 결국 원래의 참조값을 유지해줌.
+
+    e.g.) if the parameter was lvalue(`int x = 10;`) `T` becomes `int&` and `int&` +`&&` is lvalue 
+
+    e.g.) it the parameter was rvalue(`10`) `T` becomes `int` and `int` + `&&` is rvalue.
+
+2. `std::remove_reference_t<T>`
+
+    이거는 `std::move` 의 심장과도 갗음. 만약 우리가 `int x = 10` 같은 거를 넘겼다고 치면, `T`는 `int&`가 됨. 우리의 목표(move의 목표는) 이 친구를 우측값으로 바꾸는거니까 컴파일러한테 이렇게 명령하는거임. "야, `T`에 `&`든 `&&`든 뭐가 붙어있든 간에 일단 다 떼어버려! 순수한 알맹이 타입만 남겨!"
+
+    e.g.) `remove_reference_t<int&>` -> `int`
+
+    e.g.) `remove_reference_t<int&&>` -> `int`
+
+3. `&&` 우측값 강제 casting.
+
+    2번에서 reference 껍데기가 다 벗겨진 순수한 `int` 알맹이가 나왔으면, 그 위로 `&&`를 붙여주는거임.
+
 
 | 호출 형태 (Argument) | `void f(int&)` | `void f(const int&)` | `void f(int&&)` | **최종 선택 (Best Match)** |
 | :--- | :---: | :---: | :---: | :--- |
