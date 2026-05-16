@@ -1,6 +1,18 @@
 .vscode/
 .DS_Store
 
+# Editor / tool cache
+*.swp
+.cph/
+
+# Nested repo (has its own .git; large data files)
+digital-art-auction-engine/
+
+# Local build artifacts (no extension)
+hello
+main
+singlyLinkedList
+
 Effective+Modern+C++.pdf
 
 # specific project
