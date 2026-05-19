@@ -136,3 +136,98 @@ More specifically,
 "In C++, an **rvalue** is essentially an expression that does not have a persistent **identity** in the eyes of the compiler. When we use `std::move(x)`, we are not physically moving the object in memory; rather, we are **casting** it to an **xvalue** (expiring value).
 
 Even though the object still resides at the same **physical memory address**, the C++ type system treats the result of `std::move` as an anonymous temporary. By **restricting address-of operations** on this result, the language ensures that the object's resources can be safely 'stolen' or moved without the risk of the original identifier being misused."
+
+**another example of `move`**
+```cpp
+#include <iostream>
+#include <cstdint>
+#include <cstring>
+#include <utility> // std::move 사용을 위해 명시적으로 포함
+
+class String {
+public:
+    String() : m_Data(nullptr), m_Size(0) {} // 기본 생성자에서 멤버 변수 안전하게 초기화
+
+    String(const char* string) {
+        printf("Created!\n");
+        m_Size = strlen(string); // \0 제오하고 진짜 글자 수만 셈.
+        
+        // ⭕ 수정 1: C스타일 문자열은 끝에 널 문자('\0')가 필요하므로 m_Size + 1 크기로 할당
+        m_Data = new char[m_Size + 1]; 
+        memcpy(m_Data, string, m_Size);
+        m_Data[m_Size] = '\0'; // 맨 끝에 널 문자 명시적으로 삽입
+    }
+    
+    // 이동 생성자 (Move Constructor)
+    String(String&& other) noexcept {
+        printf("Moved!\n");
+        m_Size = other.m_Size;
+        m_Data = other.m_Data; // 원본의 주소값을 쏙 뺏어옴
+        
+        // 원본 빈 껍데기로 만들기
+        other.m_Size = 0;
+        other.m_Data = nullptr;
+    }
+    
+    // 복사 생성자 (Copy Constructor)
+    String(const String& other) {
+        printf("Copied!\n");
+        m_Size = other.m_Size;
+        
+        // ⭕ 수정 1 반영: 복사할 때도 안전하게 m_Size + 1 크기로 힙 할당
+        m_Data = new char[m_Size + 1]; 
+        memcpy(m_Data, other.m_Data, m_Size);
+        m_Data[m_Size] = '\0';
+    }
+    
+    void Print() const { // 읽기 전용 함수이므로 const 추가
+        // 0번 주소가 들어오는 nullptr 데레퍼런스 방지 안전장치
+        if (!m_Data) {
+            printf("[Empty String]\n");
+            return;
+        }
+
+        for (uint32_t i = 0; i < m_Size; ++i) {
+            printf("%c", m_Data[i]);
+        }
+        printf("\n");
+    }
+    
+    ~String() {
+        printf("deleted!\n");
+        // ⭕ 수정 2: new[] 배열로 할당한 메모리는 반드시 delete[] 로 해제해야 합니다!
+        // (C++에서 delete에 nullptr을 넣는 것은 안전하므로 별도의 if문 체크는 필요 없습니다.)
+        delete[] m_Data; 
+    }
+
+private:
+    char* m_Data = nullptr; // 선언과 동시에 nullptr 초기화 습관화
+    uint32_t m_Size = 0;
+};
+
+class Entity {
+public:
+    // 인자 값을 그대로 복사하는 경우
+    Entity(const String& name)
+        : m_Name(name) {}
+    
+    // 인자 값이 임시 객체(rvalue)여서 이사를 보내는 경우
+    Entity(String&& name) 
+        : m_Name(std::move(name)) {} // name 자체는 lvalue이므로 다시 std::move로 묶어서 이동 생성자 호출 유도
+        
+    void PrintName() const { // const 추가
+        m_Name.Print();
+    }
+
+private:
+    String m_Name;
+};
+
+int main() {
+    Entity entity("Cherno");
+    entity.PrintName();
+    
+    std::cin.get();
+    return 0;
+}
+```
