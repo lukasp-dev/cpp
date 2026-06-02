@@ -19,7 +19,7 @@ vector<string> split(const string& s, char delimiter){
     }
 
     return ret;
-}
+} 
 
 int main(){
     vector<string> ret = split("Hello,World,This,is,a,test", ',');
