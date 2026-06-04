@@ -1,15 +1,22 @@
-#include <iostream>
-#include <string>
+#include <bits/stdc++.h>
+using namespace std;
+
+
+
+int go(const vector<int>& rods, int depth, int limit){
+
+}
+
 int main(){
-    int a = 100;
-    int b = 5;
+    int N; cin >> N;
+    vector<int> rods;
+    int rod;
+    for(int i=0; i<N; ++i){
+        cin >> rod;
+        rods.push_back(rod);
+    }
 
-    int & reference_a = a;
-    reference_a = b;
+    return go(rods, 0, rods.size()-1);
 
-    std::cout << "a: " << a << std::endl;
-    std::cout << "b: " << b << std::endl;
-    std::cout << "reference_a: " << reference_a << std::endl;
-    
     return 0;
 }
